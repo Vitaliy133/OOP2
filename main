@@ -18,3 +18,19 @@ def read_cookbook():
             cook_book[dish] = ing_list
     return cook_book
 
+def get_shop_list_by_dishes(dishes, person_count):
+    ingredients_list = dict()
+
+    for dish in dishes:
+            for ingredients in cook_book[dish]:
+                meas_quan_list = dict()
+                if ingredients['ingredient_name'] not in ingredients_list:
+                    meas_quan_list['measure'] = ingredients['measure']
+                    meas_quan_list['quantity'] = ingredients['quantity'] * person_count
+                    ingredients_list[ingredients['ingredient_name']] = meas_quan_list
+                else:
+                    ingredients_list[ingredients['ingredient_name']]['quantity'] = ingredients_list[ingredients['ingredient_name']]['quantity'] + ingredients['quantity'] * person_count
+    return ingredients_list
+
+
+
