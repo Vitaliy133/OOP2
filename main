@@ -20,7 +20,7 @@ def read_cookbook():
 
 def get_shop_list_by_dishes(dishes, person_count):
     ingredients_list = dict()
-
+    cook_book = read_cookbook()
     for dish in dishes:
             for ingredients in cook_book[dish]:
                 meas_quan_list = dict()
@@ -33,4 +33,4 @@ def get_shop_list_by_dishes(dishes, person_count):
     return ingredients_list
 
 
-
+print(get_shop_list_by_dishes(['Запеченный картофель', 'Омлет'], 2))
