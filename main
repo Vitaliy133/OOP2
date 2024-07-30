@@ -23,13 +23,88 @@ def get_shop_list_by_dishes(dishes, person_count):
     cook_book = read_menu()
     for dish in dishes:
             for ingredients in cook_book[dish]:
-                meas_quan_list = dict()
+                shopping_list = dict()
                 if ingredients['ingredient_name'] not in ingredients_list:
-                    meas_quan_list['measure'] = ingredients['measure']
-                    meas_quan_list['quantity'] = ingredients['quantity'] * person_count
-                    ingredients_list[ingredients['ingredient_name']] = meas_quan_list
+                    shopping_list['measure'] = ingredients['measure']
+                    shopping_list['quantity'] = ingredients['quantity'] * person_count
+                    ingredients_list[ingredients['ingredient_name']] = shopping_list
                 else:
                     ingredients_list[ingredients['ingredient_name']]['quantity'] = ingredients_list[ingredients['ingredient_name']]['quantity'] + ingredients['quantity'] * person_count
     return ingredients_list
 
+def merged_file():
+    file1_path = os.path.join(os.getcwd(), '1.txt')
+    file2_path = os.path.join(os.getcwd(), '2.txt')
+    file3_path = os.path.join(os.getcwd(), '3.txt')
+    with open(file1_path, encoding='utf-8') as f1:
+        file1 = f1.readlines()
+    with open(file2_path, encoding='utf-8') as f2:
+        file2 = f2.readlines()
+    with open(file3_path, encoding='utf-8') as f3:
+        file3 = f3.readlines()
+    with open("merged.txt", 'w', encoding='utf-8') as f_merged:
+        small = ''
+        normal = ''
+        large = ''
+        small_text = ''
+        normal_text = ''
+        large_text = ''
 
+        if len(file1) > len(file2):
+            if len(file1) > len(file3):
+                large = file1
+                large_text = '1.txt'
+                if len(file3) < len(file2):
+                    normal = file2
+                    normal_text = '2.txt'
+                    small = file3
+                    small_text = '3.txt'
+                else:
+                    normal = file3
+                    normal_text = '3.txt'
+                    small = file2
+                    small_text = '2.txt'
+            else:
+                large = file3
+                large_text = '3.txt'
+                normal = file1
+                normal_text = '1.txt'
+                small = file2
+                small_text = '2.txt'
+        else:
+            if len(file1) < len(file3):
+                small = file1
+                small_text = '1.txt'
+                if len(file2) > len(file3):
+                    large = file2
+                    large_text = '2.txt'
+                    normal = file3
+                    normal_text = '3.txt'
+                else:
+                    large = file3
+                    large_text = '3.txt'
+                    normal = file2
+                    normal_text = '2.txt'
+            else:
+                large = file2
+                large_text = '2.txt'
+                normal = file1
+                normal_text = '1.txt'
+                small = file3
+                small_text = '3.txt'
+        
+        f_merged.write(small_text + '\n')
+        f_merged.write(str(len(small)) + '\n')
+        f_merged.writelines(small)
+        f_merged.write('\n')
+        f_merged.write(normal_text + '\n')
+        f_merged.write(str(len(normal)) + '\n')
+        f_merged.writelines(normal)
+        f_merged.write('\n')
+        f_merged.write(large_text + '\n')
+        f_merged.write(str(len(large)) + '\n')
+        f_merged.writelines(large)
+        
+print(f'Задание 1:\n{read_menu()}\n')
+print(f'Задание 2:\n{get_shop_list_by_dishes(['Запеченный картофель', 'Омлет'], 2)}')
+merged_file()
