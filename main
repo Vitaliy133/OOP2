@@ -1,6 +1,6 @@
 import os
 
-def read_cookbook():
+def read_menu():
     file_path = os.path.join(os.getcwd(), 'recipes.txt')
     cook_book = {}
     with open(file_path, encoding='utf-8') as f:
@@ -20,7 +20,7 @@ def read_cookbook():
 
 def get_shop_list_by_dishes(dishes, person_count):
     ingredients_list = dict()
-    cook_book = read_cookbook()
+    cook_book = read_menu()
     for dish in dishes:
             for ingredients in cook_book[dish]:
                 meas_quan_list = dict()
@@ -33,4 +33,3 @@ def get_shop_list_by_dishes(dishes, person_count):
     return ingredients_list
 
 
-print(get_shop_list_by_dishes(['Запеченный картофель', 'Омлет'], 2))
